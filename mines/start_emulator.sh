@@ -1,0 +1,1 @@
+emulator -no-snapshot -avd MyDevice
