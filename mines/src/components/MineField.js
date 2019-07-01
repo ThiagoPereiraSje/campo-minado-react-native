@@ -9,7 +9,7 @@ export default props => {
             return <Field {...field} key={c} />;
         });
 
-        return <View key={r}>{columns}</View>;
+        return <View key={r} style={styles.columns}>{columns}</View>;
     });
 
     return <View style={styles.container}>{rows}</View>;
@@ -17,7 +17,9 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         backgroundColor: '#EEE',
+    },
+    columns: {
+        flexDirection: 'row',
     },
 });
