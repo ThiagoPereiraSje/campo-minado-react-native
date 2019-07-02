@@ -4,6 +4,8 @@ import params from './src/params';
 
 import MineField from './src/components/MineField';
 import Header from './src/components/Header';
+import LevelSelection from './src/screens/LevelSelecion';
+
 import { createMinedBoard, cloneBoard, openField, hadExplosion, 
   wonGame, showMines, invertFlag, flagsUsed } from './src/functions';
 
@@ -29,6 +31,7 @@ export default class App extends Component {
       board: createMinedBoard(rows, cols, this.minesAmount()),
       won: false,
       lost: false,
+      showLevelSelection: false,
     };
   }
 
@@ -66,18 +69,28 @@ export default class App extends Component {
     this.setState(this.createState());
   }
 
+  onLevelSelected = (level) => {
+    params.difficultLevel = level;
+    this.setState(this.createState());
+  }
+
+  onCancel = () => {
+    this.setState({ showLevelSelection: false});
+  }
+
+  onFlagPress = () => {
+    this.setState({ showLevelSelection: true});
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        {/* <Text style={styles.welcome}>
-          Iniciando o Mines!
-        </Text>
-        <Text style={styles.instructions}>
-          Tamanho da grade: {params.getRowsAmount()} x {params.getColumnsAmount()}
-        </Text> */}
+        <LevelSelection isVisible={this.state.showLevelSelection} 
+          onLevelSelected={this.onLevelSelected}
+          onCancel={this.onCancel} />
 
         <Header flagsLeft={this.minesAmount() - flagsUsed(this.state.board)}
-          onNewGame={this.onNewGame} />
+          onNewGame={this.onNewGame} onFlagPress={this.onFlagPress} />
 
         <View style={styles.board}>
           <MineField board={this.state.board} 
